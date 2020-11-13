@@ -1,0 +1,30 @@
+pragma solidity ^0.6.0;
+
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+
+
+
+contract ToDoList is Ownable{
+    
+    struct ToDo
+    {
+        string  task_name;
+        uint task_id;
+        
+    }
+    
+    mapping(uint => ToDo) ToDo_List;
+    uint ToDo_ListKey = 0;
+    
+    function addTask(string memory T_name , uint T_id) public onlyOwner
+    {
+       ToDo_List[ToDo_ListKey] = (ToDo(T_name , T_id));
+       ToDo_ListKey++;
+    }
+    
+    function showTask(uint indexx) public view onlyOwner returns (string memory , uint)
+    {
+       ToDo storage ToDos =ToDo_List[indexx]; 
+       return(ToDos.task_name , ToDos.task_id);
+    }
+}
